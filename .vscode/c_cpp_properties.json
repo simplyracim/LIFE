@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/glm/**",
+                "${workspaceFolder}/glad/**",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/src/shader/**",
+                "C:/SFML-3.0.2/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "windows-gcc-x64"
+        }
+    ],
+    "version": 4
+}
