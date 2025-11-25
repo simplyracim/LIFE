@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHADER_H
+#define SHADER_H
+
 #include <string>
 #include <glad/glad.h>  // Include GLAD first
 #include <SFML/Graphics.hpp>
@@ -23,3 +25,5 @@ private:
     GLuint compileShader(const std::string& source, GLenum type);
     std::string readFile(const std::string& filePath);
 };
+
+#endif // SHADER_H

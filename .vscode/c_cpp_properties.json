@@ -7,7 +7,6 @@
                 "${workspaceFolder}/glad/**",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/src/shader/**",
                 "C:/SFML-3.0.2/include"
             ],
             "defines": [

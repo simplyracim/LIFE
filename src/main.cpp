@@ -43,7 +43,7 @@ int main() {
     std::cout << "Camera created" << std::endl;
 
     // Create 3D grid
-    Grid3D grid(8, 8, 8);  // Smaller grid for better performance
+    Grid3D grid(50, 50, 50);  // Smaller grid for better performance
     grid.initialize();
     std::cout << "Grid initialized" << std::endl;
 

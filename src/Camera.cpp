@@ -8,7 +8,7 @@ Camera::Camera()
     , m_up(0.0f, 1.0f, 0.0f)
     , m_yaw(-90.0f)
     , m_pitch(0.0f)
-    , m_distance(10.0f)
+    , m_distance(100.0f)
     , m_isRotating(false) {
 }
 
@@ -44,7 +44,7 @@ void Camera::handleEvent(const sf::Event& event) {
                 sf::Vector2i delta = currentPos - m_lastMousePos;
                 
                 m_yaw += delta.x * 0.3f;
-                m_pitch -= delta.y * 0.3f;
+                m_pitch += delta.y * 0.3f;
                 
                 // Clamp pitch to avoid flipping
                 if (m_pitch > 89.0f) m_pitch = 89.0f;
@@ -54,9 +54,9 @@ void Camera::handleEvent(const sf::Event& event) {
             }
         }
         else if constexpr (std::is_same_v<T, sf::Event::MouseWheelScrolled>) {
-            m_distance -= event.delta * 0.5f;
-            if (m_distance < 1.0f) m_distance = 1.0f;
-            if (m_distance > 20.0f) m_distance = 20.0f;
+            m_distance -= event.delta * m_distance / 50;
+            if (m_distance < m_distance / 100) m_distance = m_distance / 100;
+            if (m_distance > m_distance * 100) m_distance = m_distance * 100;
         }
     });
 }

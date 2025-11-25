@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GRID3D_H
+#define GRID3D_H
+
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <glm/glm.hpp>
@@ -39,3 +41,5 @@ private:
     int getIndex(int x, int y, int z) const;
     bool isValidPosition(int x, int y, int z) const;
 };
+
+#endif // GRID3D_H

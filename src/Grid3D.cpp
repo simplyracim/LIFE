@@ -37,7 +37,7 @@ void Grid3D::createCubeGeometry() {
          0.5f,  0.5f,  0.5f,  0.5f, 0.5f, 0.5f,  // gray
         -0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f   // white
     };
-    
+
     unsigned int indices[] = {
         // Back face
         0, 1, 2, 2, 3, 0,

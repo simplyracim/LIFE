@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CAMERA_H
+#define CAMERA_H
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window/Event.hpp>
 #include <glm/glm.hpp>
@@ -28,3 +30,5 @@ private:
     bool m_isRotating;
     sf::Vector2i m_lastMousePos;
 };
+
+#endif // CAMERA_H
