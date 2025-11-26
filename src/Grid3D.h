@@ -40,6 +40,17 @@ private:
     int countNeighbors(int x, int y, int z);
     int getIndex(int x, int y, int z) const;
     bool isValidPosition(int x, int y, int z) const;
+
+    // Instance buffers
+    GLuint m_instanceVBO;
+    GLuint m_colorVBO;
+
+    // Store positions/colors for instances
+    std::vector<glm::vec3> m_instancePositions;
+    std::vector<glm::vec3> m_instanceColors;
+
+    // Add radius for heatmap
+    float m_heatmapRadius = 2.0f;
 };
 
 #endif // GRID3D_H
