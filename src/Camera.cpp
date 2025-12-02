@@ -20,7 +20,7 @@ void Camera::update(float deltaTime) {
     m_position.x = m_distance * std::cos(yawRad) * std::cos(pitchRad);
     m_position.y = m_distance * std::sin(pitchRad);
     m_position.z = m_distance * std::sin(yawRad) * std::cos(pitchRad);
-}
+};
 
 void Camera::handleEvent(const sf::Event& event) {
     // SFML 3.0 uses visitor pattern

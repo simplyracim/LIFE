@@ -31,15 +31,8 @@ private:
     std::vector<bool> m_grid;
     std::vector<bool> m_nextGrid;
     
-    // OpenGL resources
+    // OpenGL resources (mesh)
     GLuint m_VAO, m_VBO, m_EBO;
-    std::vector<float> m_vertices;
-    std::vector<unsigned int> m_indices;
-    
-    void createCubeGeometry();
-    int countNeighbors(int x, int y, int z);
-    int getIndex(int x, int y, int z) const;
-    bool isValidPosition(int x, int y, int z) const;
 
     // Instance buffers
     GLuint m_instanceVBO;
@@ -49,8 +42,15 @@ private:
     std::vector<glm::vec3> m_instancePositions;
     std::vector<glm::vec3> m_instanceColors;
 
-    // Add radius for heatmap
-    float m_heatmapRadius = 2.0f;
+    // Heatmap radius (integer radius will be used)
+    int m_heatmapRadius = 2;
+
+    // helpers
+    void createCubeGeometry();
+    int countNeighbors(int x, int y, int z) const;
+    float computeDensity(int x, int y, int z, int radius) const;
+    int getIndex(int x, int y, int z) const;
+    bool isValidPosition(int x, int y, int z) const;
 };
 
 #endif // GRID3D_H

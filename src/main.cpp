@@ -32,7 +32,7 @@ int main() {
 
     // Create shader
     Shader shader;
-    if (!shader.loadFromFile("shaders/vertex.glsl", "shaders/fragment.glsl")) {
+    if (!shader.loadFromFile("src/shaders/vertex.glsl", "src/shaders/fragment.glsl")) {
         std::cerr << "Failed to load shaders" << std::endl;
         return 0;
     }
