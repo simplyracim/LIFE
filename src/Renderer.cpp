@@ -26,15 +26,20 @@ void Renderer::render(const Life& life, Shader& shader, const glm::mat4& view, c
                 float offsetZ = z - sizeZ / 2.0f;
 
                 positions.emplace_back(offsetX, offsetY, offsetZ);
-                colors.push_back(m_heatmap.getColor(life, x, y, z));
+
+                Color c = m_heatmap.getColor(life, x, y, z);
+                colors.emplace_back(c.r, c.g, c.b);
             }
 
     if (positions.empty()) return;
 
+    // Upload positions and colors to GPU
     m_instanceBuffer.uploadPositions(positions);
     m_instanceBuffer.uploadColors(colors);
 
+    // Bind cell VAO and setup instanced attributes
     m_cell.bind();
+
     glEnableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, m_instanceBuffer.getPositionVBO());
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
@@ -46,5 +51,6 @@ void Renderer::render(const Life& life, Shader& shader, const glm::mat4& view, c
     glVertexAttribDivisor(3, 1);
 
     glDrawElementsInstanced(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0, positions.size());
+
     glBindVertexArray(0);
 }

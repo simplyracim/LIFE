@@ -44,7 +44,7 @@ int main() {
 
     Cell cell;  // Cube mesh
     InstanceBuffer instanceBuffer(sizeX * sizeY * sizeZ);
-    Heatmap heatmap(1);  // density radius
+    Heatmap heatmap(5);  // density radius
     Renderer renderer(cell, instanceBuffer, heatmap);
 
     // Timing

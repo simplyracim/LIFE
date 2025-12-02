@@ -54,20 +54,29 @@ void Life::setCell(int x, int y, int z, bool state) {
 }
 
 float Life::computeDensity(int x, int y, int z, int radius) const {
-    int count = 0, total = 0;
+    int count = 0;
 
+    // Loop through all neighbors including the center
     for (int dz = -radius; dz <= radius; ++dz)
         for (int dy = -radius; dy <= radius; ++dy)
             for (int dx = -radius; dx <= radius; ++dx) {
-                if (dx == 0 && dy == 0 && dz == 0) continue;
                 int nx = x + dx, ny = y + dy, nz = z + dz;
                 if (!isValidPosition(nx, ny, nz)) continue;
-                total++;
                 if (getCell(nx, ny, nz)) count++;
             }
 
-    return total > 0 ? float(count) / float(total) : 0.0f;
+    // Max possible neighbors including the center
+    int maxNeighbors = 0;
+    for (int dz = -radius; dz <= radius; ++dz)
+        for (int dy = -radius; dy <= radius; ++dy)
+            for (int dx = -radius; dx <= radius; ++dx) {
+                int nx = x + dx, ny = y + dy, nz = z + dz;
+                if (isValidPosition(nx, ny, nz)) maxNeighbors++;
+            }
+
+    return maxNeighbors > 0 ? float(count) / float(maxNeighbors) : 0.0f;
 }
+
 
 bool Life::isValidPosition(int x, int y, int z) const {
     return x >= 0 && x < m_sizeX &&
