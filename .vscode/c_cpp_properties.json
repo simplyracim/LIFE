@@ -3,10 +3,11 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/glm/**",
-                "${workspaceFolder}/glad/**",
+                "${workspaceFolder}/external/glm/**",
+                "${workspaceFolder}/external/glad/**",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
+                "${workspaceFolder}/include/**",
                 "C:/SFML-3.0.2/include"
             ],
             "defines": [
