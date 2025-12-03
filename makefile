@@ -1,13 +1,13 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -MMD -MP -DGLAD_GL -Iinclude -Iexternal/glm -Iexternal/glad/include
+CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -MMD -MP -DGLAD_GL \
+           -Iinclude -Iexternal/glm -Iexternal/glad/include -Isrc -Isrc/gui \
+           -I"C:/SFML-3.0.2/include"
 LDFLAGS = 
 
 # SFML configuration
 SFML_DIR = C:/SFML-3.0.2
-SFML_INC = -I"$(SFML_DIR)/include"
-SFML_LIB = -L"$(SFML_DIR)/lib"
-SFML_FLAGS = -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIB = -L"$(SFML_DIR)/lib" -lsfml-graphics -lsfml-window -lsfml-system
 
 # OpenGL flags
 GL_FLAGS = -lopengl32 -lgdi32
@@ -23,8 +23,9 @@ BINDIR = bin
 SHADERDIR = $(SRCDIR)/shaders
 
 # Source files
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+SOURCES = $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/gui/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
+OBJECTS := $(patsubst $(SRCDIR)/gui/%.cpp,$(OBJDIR)/gui/%.o,$(OBJECTS))
 DEPENDS = $(OBJECTS:.o=.d)
 
 # Target
@@ -37,6 +38,9 @@ all: $(TARGET)
 $(OBJDIR):
 	if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
 
+$(OBJDIR)/gui:
+	if not exist "$(OBJDIR)/gui" mkdir "$(OBJDIR)/gui"
+
 $(BINDIR):
 	if not exist "$(BINDIR)" mkdir "$(BINDIR)"
 
@@ -44,12 +48,16 @@ $(BINDIR)/shaders:
 	if not exist "$(BINDIR)/shaders" mkdir "$(BINDIR)/shaders"
 
 # Main target
-$(TARGET): $(OBJDIR) $(BINDIR) $(BINDIR)/shaders $(OBJECTS) $(GLAD_OBJ)
-	$(CXX) $(OBJECTS) $(GLAD_OBJ) -o $@ $(LDFLAGS) $(SFML_LIB) $(SFML_FLAGS) $(GL_FLAGS)
+$(TARGET): $(OBJDIR) $(OBJDIR)/gui $(BINDIR) $(BINDIR)/shaders $(OBJECTS) $(GLAD_OBJ)
+	$(CXX) $(OBJECTS) $(GLAD_OBJ) -o $@ $(LDFLAGS) $(SFML_LIB) $(GL_FLAGS)
 
 # Compile C++ sources
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -I$(SRCDIR) $(SFML_INC) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Compile GUI sources
+$(OBJDIR)/gui/%.o: $(SRCDIR)/gui/%.cpp | $(OBJDIR)/gui
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 # Compile GLAD
 $(GLAD_OBJ): $(GLAD_SRC) | $(OBJDIR)

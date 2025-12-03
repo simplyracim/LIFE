@@ -1,4 +1,5 @@
 #include "Life.h"
+#include <iostream>
 #include <random>
 #include <algorithm>
 
@@ -73,7 +74,7 @@ float Life::computeDensity(int x, int y, int z, int radius) const {
                 int nx = x + dx, ny = y + dy, nz = z + dz;
                 if (isValidPosition(nx, ny, nz)) maxNeighbors++;
             }
-
+    // std::cout << "Max neighbors : " << maxNeighbors << " / Count : " << count << std::endl;
     return maxNeighbors > 0 ? float(count) / float(maxNeighbors) : 0.0f;
 }
 

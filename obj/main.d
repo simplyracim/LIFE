@@ -224,7 +224,7 @@ obj/main.o: src/main.cpp C:/SFML-3.0.2/include/SFML/Graphics.hpp \
  external/glm/glm/gtc/../ext/matrix_transform.inl \
  external/glm/glm/gtc/matrix_transform.inl include/Life.h include/Cell.h \
  include/InstanceBuffer.h include/Heatmap.h include/Renderer.h \
- include/Shader.h
+ include/Shader.h include/gui/Button.h
 C:/SFML-3.0.2/include/SFML/Graphics.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/BlendMode.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/Export.hpp:
@@ -467,3 +467,4 @@ include/InstanceBuffer.h:
 include/Heatmap.h:
 include/Renderer.h:
 include/Shader.h:
+include/gui/Button.h:

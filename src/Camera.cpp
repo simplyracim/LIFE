@@ -66,8 +66,14 @@ glm::mat4 Camera::getViewMatrix() const {
 }
 
 glm::mat4 Camera::getProjectionMatrix(float aspectRatio) const {
-    return glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
+    float nearPlane = 0.1f;
+
+    // Compute far plane dynamically from the orbiting distance
+    float farPlane = m_distance * 3.0f;   // Always safely beyond the camera
+
+    return glm::perspective(glm::radians(45.0f), aspectRatio, nearPlane, farPlane);
 }
+
 
 void Camera::setPosition(const glm::vec3& position) {
     m_position = position;
