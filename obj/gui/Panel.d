@@ -1,4 +1,4 @@
-obj/gui/Button.o: src/gui/Button.cpp include/gui/Button.h \
+obj/gui/Panel.o: src/gui/Panel.cpp include/gui/Panel.h \
  C:/SFML-3.0.2/include/SFML/Graphics.hpp \
  C:/SFML-3.0.2/include/SFML/Graphics/BlendMode.hpp \
  C:/SFML-3.0.2/include/SFML/Graphics/Export.hpp \
@@ -76,8 +76,9 @@ obj/gui/Button.o: src/gui/Button.cpp include/gui/Button.h \
  C:/SFML-3.0.2/include/SFML/System/FileInputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/InputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/MemoryInputStream.hpp \
- C:/SFML-3.0.2/include/SFML/System/Sleep.hpp include/gui/Widget.h
-include/gui/Button.h:
+ C:/SFML-3.0.2/include/SFML/System/Sleep.hpp include/gui/Button.h \
+ include/gui/Widget.h
+include/gui/Panel.h:
 C:/SFML-3.0.2/include/SFML/Graphics.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/BlendMode.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/Export.hpp:
@@ -156,4 +157,5 @@ C:/SFML-3.0.2/include/SFML/System/FileInputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/InputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/MemoryInputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/Sleep.hpp:
+include/gui/Button.h:
 include/gui/Widget.h:

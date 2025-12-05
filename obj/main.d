@@ -1,4 +1,7 @@
-obj/main.o: src/main.cpp C:/SFML-3.0.2/include/SFML/Graphics.hpp \
+obj/main.o: src/main.cpp include/Shader.h \
+ external/glad/include/glad/glad.h \
+ external/glad/include/KHR/khrplatform.h \
+ C:/SFML-3.0.2/include/SFML/Graphics.hpp \
  C:/SFML-3.0.2/include/SFML/Graphics/BlendMode.hpp \
  C:/SFML-3.0.2/include/SFML/Graphics/Export.hpp \
  C:/SFML-3.0.2/include/SFML/Config.hpp \
@@ -75,11 +78,8 @@ obj/main.o: src/main.cpp C:/SFML-3.0.2/include/SFML/Graphics.hpp \
  C:/SFML-3.0.2/include/SFML/System/FileInputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/InputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/MemoryInputStream.hpp \
- C:/SFML-3.0.2/include/SFML/System/Sleep.hpp \
- external/glad/include/glad/glad.h \
- external/glad/include/KHR/khrplatform.h include/Shader.h \
- external/glm/glm/glm.hpp external/glm/glm/detail/_fixes.hpp \
- external/glm/glm/detail/setup.hpp \
+ C:/SFML-3.0.2/include/SFML/System/Sleep.hpp external/glm/glm/glm.hpp \
+ external/glm/glm/detail/_fixes.hpp external/glm/glm/detail/setup.hpp \
  external/glm/glm/detail/../simd/platform.h external/glm/glm/fwd.hpp \
  external/glm/glm/detail/qualifier.hpp external/glm/glm/detail/setup.hpp \
  external/glm/glm/vec2.hpp external/glm/glm/./ext/vector_bool2.hpp \
@@ -224,7 +224,11 @@ obj/main.o: src/main.cpp C:/SFML-3.0.2/include/SFML/Graphics.hpp \
  external/glm/glm/gtc/../ext/matrix_transform.inl \
  external/glm/glm/gtc/matrix_transform.inl include/Life.h include/Cell.h \
  include/InstanceBuffer.h include/Heatmap.h include/Renderer.h \
- include/Shader.h include/gui/Button.h
+ include/Shader.h include/gui/Panel.h include/gui/Button.h \
+ include/gui/Widget.h
+include/Shader.h:
+external/glad/include/glad/glad.h:
+external/glad/include/KHR/khrplatform.h:
 C:/SFML-3.0.2/include/SFML/Graphics.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/BlendMode.hpp:
 C:/SFML-3.0.2/include/SFML/Graphics/Export.hpp:
@@ -303,9 +307,6 @@ C:/SFML-3.0.2/include/SFML/System/FileInputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/InputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/MemoryInputStream.hpp:
 C:/SFML-3.0.2/include/SFML/System/Sleep.hpp:
-external/glad/include/glad/glad.h:
-external/glad/include/KHR/khrplatform.h:
-include/Shader.h:
 external/glm/glm/glm.hpp:
 external/glm/glm/detail/_fixes.hpp:
 external/glm/glm/detail/setup.hpp:
@@ -467,4 +468,6 @@ include/InstanceBuffer.h:
 include/Heatmap.h:
 include/Renderer.h:
 include/Shader.h:
+include/gui/Panel.h:
 include/gui/Button.h:
+include/gui/Widget.h:
