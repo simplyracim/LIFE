@@ -1,13 +1,12 @@
-#include "Heatmap.h"
+#include "Coloring.h"
 #include "Life.h"
-#include <algorithm>  // for std::clamp
+#include <algorithm> // for std::clamp
 
-Heatmap::Heatmap(int radius) : m_radius(radius) {}
+Coloring::Coloring(int radius, ColoringPattern pattern) 
+    : m_radius(radius), m_pattern(pattern) {}
 
-Color Heatmap::getColor(const Life& life, int x, int y, int z) const {
-    float density = life.computeDensity(x, y, z, m_radius);
-
-    // Thresholds mapped into 0 → 0.15
+// Heatmap with thresholds T1→T2→T3→TOP
+Color Coloring::densityToHeatmap(float density) const {
     const float T1  = 0.05f;  // blue -> cyan
     const float T2  = 0.10f;  // cyan -> green
     const float T3  = 0.125f; // green -> yellow
@@ -16,28 +15,24 @@ Color Heatmap::getColor(const Life& life, int x, int y, int z) const {
     Color color;
 
     if (density < T1) {
-        // blue -> cyan
         float t = (T1 > 0.0f) ? (density / T1) : 0.0f;
         color.r = 0.0f;
         color.g = t;
         color.b = 1.0f;
     }
     else if (density < T2) {
-        // cyan -> green
         float t = (density - T1) / (T2 - T1);
         color.r = 0.0f;
         color.g = 1.0f;
         color.b = 1.0f - t;
     }
     else if (density < T3) {
-        // green -> yellow
         float t = (density - T2) / (T3 - T2);
         color.r = t;
         color.g = 1.0f;
         color.b = 0.0f;
     }
     else {
-        // yellow -> red
         float denom = (TOP - T3);
         float t = denom > 0.0f ? (density - T3) / denom : 1.0f;
         t = glm::clamp(t, 0.0f, 1.0f);
@@ -47,5 +42,23 @@ Color Heatmap::getColor(const Life& life, int x, int y, int z) const {
     }
 
     return color;
+}
 
+// Simple black → white
+Color Coloring::densityToGrayscale(float density) const {
+    float v = glm::clamp(density / 0.15f, 0.0f, 1.0f); // normalize to 0→1
+    return { v, v, v };
+}
+
+Color Coloring::getColor(const Life& life, int x, int y, int z) const {
+    float density = life.computeDensity(x, y, z, m_radius);
+
+    switch (m_pattern) {
+        case ColoringPattern::Heatmap:
+            return densityToHeatmap(density);
+        case ColoringPattern::Grayscale:
+            return densityToGrayscale(density);
+    }
+
+    return {1.0f, 0.0f, 1.0f}; // fallback: magenta
 }

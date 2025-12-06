@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Cell& cell, InstanceBuffer& instanceBuffer, Heatmap& heatmap)
+Renderer::Renderer(Cell& cell, InstanceBuffer& instanceBuffer, Coloring& heatmap)
     : m_cell(cell), m_instanceBuffer(instanceBuffer), m_heatmap(heatmap)
 {}
 

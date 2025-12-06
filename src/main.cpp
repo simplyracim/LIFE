@@ -3,7 +3,7 @@
 #include "Life.h"
 #include "Cell.h"
 #include "InstanceBuffer.h"
-#include "Heatmap.h"
+#include "Coloring.h"
 #include "Renderer.h"
 
 // GUI
@@ -57,14 +57,39 @@ int main() {
     // Rendering modules
     Cell cell;
     InstanceBuffer instanceBuffer(sizeX * sizeY * sizeZ);
-    Heatmap heatmap(5);
+    Coloring heatmap(5);
     Renderer renderer(cell, instanceBuffer, heatmap);
 
     // GUI Panel
-    sf::Vector2f panelSize(W / 3.f, H / 4.f);
-    sf::Vector2f panelPos(W / 3.f, H * 3.f / 4.f);
+    float panelY = H * 3.f / 4.f;
+    float panelHeight = H / 4.f;
 
-    Panel panel(panelPos, panelSize, font, "Controls");
+    float oneThird = W / 3.f;
+    float oneSixth = W / 6.f;
+
+    // --- Middle Panel (same as before) ---
+    Panel middlePanel(
+        sf::Vector2f(oneThird, panelY),
+        sf::Vector2f(oneThird, panelHeight),
+        font,
+        "Controls"
+    );
+
+    // --- Right: 2 panels side by side ---
+    Panel rightPanel1(
+        sf::Vector2f(2.f * oneThird, panelY),
+        sf::Vector2f(oneSixth, panelHeight),
+        font,
+        ""
+    );
+
+    Panel rightPanel2(
+        sf::Vector2f(2.f * oneThird + oneSixth, panelY),
+        sf::Vector2f(oneSixth, panelHeight),
+        font,
+        ""
+    );
+
 
 /*
 Button::Button(const sf::Vector2f& pos, const sf::Vector2f& size,
@@ -82,7 +107,7 @@ float startY = padding;         // relative to panel top
 std::vector<std::string> symbols = {"<<", "<", "||", ">", ">>"};
 
 for (size_t i = 0; i < symbols.size(); ++i) {
-    panel.addButton(Button(
+    middlePanel.addButton(Button(
         sf::Vector2f(startX + i * (mediaButtonSize + padding), startY),
         sf::Vector2f(mediaButtonSize, mediaButtonSize),
         font,
@@ -93,32 +118,62 @@ for (size_t i = 0; i < symbols.size(); ++i) {
 }
 
 // Add all buttons
-panel.addButton(Button(
+middlePanel.addButton(Button(
     sf::Vector2f(20.f, 20.f), sf::Vector2f(120.f, 40.f),
     font, "Randomize", 18,
     [&]() { life.randomize(); }
 ));
 
-panel.addButton(Button(
+middlePanel.addButton(Button(
     sf::Vector2f(20.f, 70.f), sf::Vector2f(120.f, 40.f),
     font, "Clear", 18,
     [&]() { life.clear(); }
 ));
 
-panel.addButton(Button(
+middlePanel.addButton(Button(
     sf::Vector2f(20.f, 120.f), sf::Vector2f(120.f, 40.f),
     font, "Update", 18,
     [&]() { life.update(); }
 ));
 
 // Additional test buttons
-panel.addButton(Button(sf::Vector2f(20.f, 170.f), sf::Vector2f(120.f, 40.f), font, "Test 1", 18, nullptr));
-panel.addButton(Button(sf::Vector2f(20.f, 220.f), sf::Vector2f(120.f, 40.f), font, "Test 2", 18, nullptr));
-panel.addButton(Button(sf::Vector2f(20.f, 270.f), sf::Vector2f(120.f, 40.f), font, "Test 3", 18, nullptr));
-panel.addButton(Button(sf::Vector2f(20.f, 320.f), sf::Vector2f(120.f, 40.f), font, "Test 4", 18, nullptr));
+middlePanel.addButton(Button(sf::Vector2f(20.f, 170.f), sf::Vector2f(120.f, 40.f), font, "Test 1", 18, nullptr));
+middlePanel.addButton(Button(sf::Vector2f(20.f, 220.f), sf::Vector2f(120.f, 40.f), font, "Test 2", 18, nullptr));
+middlePanel.addButton(Button(sf::Vector2f(20.f, 270.f), sf::Vector2f(120.f, 40.f), font, "Test 3", 18, nullptr));
+middlePanel.addButton(Button(sf::Vector2f(20.f, 320.f), sf::Vector2f(120.f, 40.f), font, "Test 4", 18, nullptr));
 
-// Arrange buttons automatically in the panel
-panel.layoutButtons();
+middlePanel.layoutButtons();
+
+// --- Right panel 1 buttons (4 buttons like middlePanel) ---
+rightPanel1.addButton(Button(sf::Vector2f(20.f, 20.f), sf::Vector2f(83.f, 83.f), font, "RA1", 16,
+    [&]() { life.setMode(LifeMode::Current3D); }));
+
+rightPanel1.addButton(Button(sf::Vector2f(20.f, 70.f), sf::Vector2f(83.f, 83.f), font, "RA2", 16,
+    [&]() { life.setMode(LifeMode::Conway2D); }));
+
+rightPanel1.addButton(Button(sf::Vector2f(20.f, 120.f), sf::Vector2f(83.f, 83.f), font, "RA3", 16,
+    [&]() { life.setMode(LifeMode::Custom3D); }));
+
+rightPanel1.addButton(Button(sf::Vector2f(20.f, 170.f), sf::Vector2f(83.f, 83.f), font, "RA4", 16,
+    [&]() { life.setMode(LifeMode::Custom2D); }));
+
+
+rightPanel1.layoutButtons();
+
+
+// --- Right panel 2 buttons (4 buttons like middlePanel) ---
+rightPanel2.addButton(Button(sf::Vector2f(20.f, 20.f), sf::Vector2f(83.f, 83.f), font, "RB1", 16,
+    [&]() { heatmap.setPattern(ColoringPattern::Heatmap); })); // RB1 → Heatmap
+
+rightPanel2.addButton(Button(sf::Vector2f(20.f, 70.f), sf::Vector2f(83.f, 83.f), font, "RB2", 16,
+    [&]() { heatmap.setPattern(ColoringPattern::Grayscale); })); // RB2 → Grayscale
+
+rightPanel2.addButton(Button(sf::Vector2f(20.f, 120.f), sf::Vector2f(83.f, 83.f), font, "RB3", 16, nullptr));
+rightPanel2.addButton(Button(sf::Vector2f(20.f, 170.f), sf::Vector2f(83.f, 83.f), font, "RB4", 16, nullptr));
+
+rightPanel2.layoutButtons();
+
+
 
     // Camera
     Camera camera;
@@ -155,7 +210,9 @@ panel.layoutButtons();
                 if (mp->button == sf::Mouse::Button::Left) {
                     sf::Vector2f mousePos(static_cast<float>(mp->position.x),
                                          static_cast<float>(mp->position.y));
-                    panel.handleClick(mousePos);
+                    middlePanel.handleClick(mousePos);
+                    rightPanel1.handleClick(mousePos);
+                    rightPanel2.handleClick(mousePos);
                 }
             }
 
@@ -184,7 +241,9 @@ panel.layoutButtons();
 
         // Draw GUI
         window.pushGLStates();
-        panel.render(window);
+        middlePanel.render(window);
+        rightPanel1.render(window);
+        rightPanel2.render(window);
         window.popGLStates();
 
         window.display();

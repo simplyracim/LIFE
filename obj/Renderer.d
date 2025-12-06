@@ -211,7 +211,7 @@ obj/Renderer.o: src/Renderer.cpp include/Renderer.h \
  C:/SFML-3.0.2/include/SFML/System/InputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/MemoryInputStream.hpp \
  C:/SFML-3.0.2/include/SFML/System/Sleep.hpp include/Cell.h \
- include/InstanceBuffer.h include/Life.h include/Heatmap.h
+ include/InstanceBuffer.h include/Life.h include/Coloring.h
 include/Renderer.h:
 external/glm/glm/glm.hpp:
 external/glm/glm/detail/_fixes.hpp:
@@ -438,4 +438,4 @@ C:/SFML-3.0.2/include/SFML/System/Sleep.hpp:
 include/Cell.h:
 include/InstanceBuffer.h:
 include/Life.h:
-include/Heatmap.h:
+include/Coloring.h:

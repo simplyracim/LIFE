@@ -1,6 +1,12 @@
 #pragma once
 #include <vector>
-#include <glm/glm.hpp>
+
+enum class LifeMode {
+    Current3D,   // Your current 3D rules
+    Conway2D,    // Classic Conway applied per XY plane independently
+    Custom3D,    // New 3D variant rules
+    Custom2D     // New 2D variant rules
+};
 
 class Life {
 public:
@@ -19,11 +25,16 @@ public:
     int getSizeY() const { return m_sizeY; }
     int getSizeZ() const { return m_sizeZ; }
 
+    void setMode(LifeMode mode) { m_mode = mode; }
+    LifeMode getMode() const { return m_mode; }
+
 private:
     int m_sizeX, m_sizeY, m_sizeZ;
     std::vector<bool> m_grid, m_next;
+    LifeMode m_mode = LifeMode::Current3D;
 
     bool isValidPosition(int x, int y, int z) const;
     int countNeighbors(int x, int y, int z) const;
+    int countNeighbors2D(int x, int y, int z) const;
     int getIndex(int x, int y, int z) const;
 };

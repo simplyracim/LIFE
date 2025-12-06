@@ -14,6 +14,7 @@ Panel::Panel(const sf::Vector2f& pos,
     m_shape.setOutlineColor(sf::Color::White);
 
     // Title
+    m_title.setString(title);
     m_title.setCharacterSize(20);
     m_title.setFillColor(sf::Color::White);
 
@@ -33,9 +34,8 @@ void Panel::addButton(const Button& btn) {
     m_buttons.push_back(std::move(b));
 }
 
-
 void Panel::handleEvent(const sf::Event& event, const sf::RenderWindow&) {
-    // Nothing — Panel doesn't react to keyboard
+    // Panel does not react to keyboard events
 }
 
 bool Panel::contains(const sf::Vector2f& point) const {

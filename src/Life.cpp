@@ -15,27 +15,76 @@ void Life::randomize() {
     std::mt19937 gen(rd());
     std::uniform_real_distribution<> dis(0.0, 1.0);
 
-    // Use index-based loop instead of auto& to avoid std::vector<bool> proxy issue
-    for (size_t i = 0; i < m_grid.size(); ++i) {
+    for (size_t i = 0; i < m_grid.size(); ++i)
         m_grid[i] = (dis(gen) > 0.7f);
-    }
 }
 
 void Life::update() {
-    for (int z = 0; z < m_sizeZ; ++z) {
-        for (int y = 0; y < m_sizeY; ++y) {
-            for (int x = 0; x < m_sizeX; ++x) {
-                int neighbors = countNeighbors(x, y, z);
-                bool currentState = getCell(x, y, z);
+    if (m_mode == LifeMode::Current3D) {
+        // Original 3D rules
+        for (int z = 0; z < m_sizeZ; ++z) {
+            for (int y = 0; y < m_sizeY; ++y) {
+                for (int x = 0; x < m_sizeX; ++x) {
+                    int neighbors = countNeighbors(x, y, z);
+                    bool currentState = getCell(x, y, z);
 
-                if (currentState) {
-                    m_next[getIndex(x, y, z)] = (neighbors == 5 || neighbors == 6);
-                } else {
-                    m_next[getIndex(x, y, z)] = (neighbors == 5);
+                    if (currentState)
+                        m_next[getIndex(x, y, z)] = (neighbors == 5 || neighbors == 6);
+                    else
+                        m_next[getIndex(x, y, z)] = (neighbors == 5);
+                }
+            }
+        }
+    } 
+    else if (m_mode == LifeMode::Conway2D) {
+        // Classic 2D Conway rules per XY plane
+        for (int z = 0; z < m_sizeZ; ++z) {
+            for (int y = 0; y < m_sizeY; ++y) {
+                for (int x = 0; x < m_sizeX; ++x) {
+                    int neighbors = countNeighbors2D(x, y, z);
+                    bool currentState = getCell(x, y, z);
+
+                    if (currentState)
+                        m_next[getIndex(x, y, z)] = (neighbors == 2 || neighbors == 3);
+                    else
+                        m_next[getIndex(x, y, z)] = (neighbors == 3);
                 }
             }
         }
     }
+    else if (m_mode == LifeMode::Custom3D) {
+        // Custom 3D rules: slightly more forgiving
+        for (int z = 0; z < m_sizeZ; ++z) {
+            for (int y = 0; y < m_sizeY; ++y) {
+                for (int x = 0; x < m_sizeX; ++x) {
+                    int neighbors = countNeighbors(x, y, z);
+                    bool currentState = getCell(x, y, z);
+
+                    if (currentState)
+                        m_next[getIndex(x, y, z)] = (neighbors >= 4 && neighbors <= 6);
+                    else
+                        m_next[getIndex(x, y, z)] = (neighbors == 5);
+                }
+            }
+        }
+    }
+    else if (m_mode == LifeMode::Custom2D) {
+        // Custom 2D rules per XY plane: birth at 3 or 6, survival 2 or 4
+        for (int z = 0; z < m_sizeZ; ++z) {
+            for (int y = 0; y < m_sizeY; ++y) {
+                for (int x = 0; x < m_sizeX; ++x) {
+                    int neighbors = countNeighbors2D(x, y, z);
+                    bool currentState = getCell(x, y, z);
+
+                    if (currentState)
+                        m_next[getIndex(x, y, z)] = (neighbors == 2 || neighbors == 4);
+                    else
+                        m_next[getIndex(x, y, z)] = (neighbors == 3 || neighbors == 6);
+                }
+            }
+        }
+    }
+
     std::swap(m_grid, m_next);
 }
 
@@ -57,7 +106,6 @@ void Life::setCell(int x, int y, int z, bool state) {
 float Life::computeDensity(int x, int y, int z, int radius) const {
     int count = 0;
 
-    // Loop through all neighbors including the center
     for (int dz = -radius; dz <= radius; ++dz)
         for (int dy = -radius; dy <= radius; ++dy)
             for (int dx = -radius; dx <= radius; ++dx) {
@@ -66,7 +114,6 @@ float Life::computeDensity(int x, int y, int z, int radius) const {
                 if (getCell(nx, ny, nz)) count++;
             }
 
-    // Max possible neighbors including the center
     int maxNeighbors = 0;
     for (int dz = -radius; dz <= radius; ++dz)
         for (int dy = -radius; dy <= radius; ++dy)
@@ -74,10 +121,9 @@ float Life::computeDensity(int x, int y, int z, int radius) const {
                 int nx = x + dx, ny = y + dy, nz = z + dz;
                 if (isValidPosition(nx, ny, nz)) maxNeighbors++;
             }
-    // std::cout << "Max neighbors : " << maxNeighbors << " / Count : " << count << std::endl;
+
     return maxNeighbors > 0 ? float(count) / float(maxNeighbors) : 0.0f;
 }
-
 
 bool Life::isValidPosition(int x, int y, int z) const {
     return x >= 0 && x < m_sizeX &&
@@ -95,6 +141,21 @@ int Life::countNeighbors(int x, int y, int z) const {
                 if (isValidPosition(nx, ny, nz) && getCell(nx, ny, nz))
                     count++;
             }
+    return count;
+}
+
+int Life::countNeighbors2D(int x, int y, int z) const {
+    int count = 0;
+    for (int dy = -1; dy <= 1; ++dy) {
+        for (int dx = -1; dx <= 1; ++dx) {
+            if (dx == 0 && dy == 0) continue; // skip self
+            int nx = x + dx;
+            int ny = y + dy;
+            if (nx >= 0 && nx < m_sizeX && ny >= 0 && ny < m_sizeY)
+                if (getCell(nx, ny, z))
+                    count++;
+        }
+    }
     return count;
 }
 
