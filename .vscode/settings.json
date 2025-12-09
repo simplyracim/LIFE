@@ -57,6 +57,18 @@
         "text_encoding": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "semaphore": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "filesystem": "cpp",
+        "condition_variable": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "mutex": "cpp",
+        "bitset": "cpp",
+        "regex": "cpp",
+        "future": "cpp"
+    },
+    "C_Cpp.default.compilerPath": "C:/MinGW/bin/g++.exe"
 }

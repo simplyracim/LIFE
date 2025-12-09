@@ -3,8 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/external/glm/**",
-                "${workspaceFolder}/external/glad/**",
+                "C:/libs/glm/**",
+                "C:/libs/glad/**",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
                 "${workspaceFolder}/include/**",

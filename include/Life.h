@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 enum class LifeMode {
     Current3D,   // Your current 3D rules
@@ -28,10 +29,17 @@ public:
     void setMode(LifeMode mode) { m_mode = mode; }
     LifeMode getMode() const { return m_mode; }
 
+    void setToric(bool toric) { m_toric = toric; }
+    bool isToric() const { return m_toric; }
+
+    bool loadFromFile(const std::string& filename);
+    bool saveToFile(const std::string& baseName, int step);
+
 private:
     int m_sizeX, m_sizeY, m_sizeZ;
     std::vector<bool> m_grid, m_next;
     LifeMode m_mode = LifeMode::Current3D;
+    bool m_toric = false; // toric wrap-around flag
 
     bool isValidPosition(int x, int y, int z) const;
     int countNeighbors(int x, int y, int z) const;

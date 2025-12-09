@@ -6,7 +6,12 @@ struct Color {
     float r, g, b;
 };
 
-enum class ColoringPattern { Heatmap, Grayscale };
+enum class ColoringPattern {
+    Heatmap,
+    Grayscale,
+    ZFade,        // NEW
+    BluePulse     // NEW
+};
 
 class Coloring {
 public:
@@ -24,6 +29,12 @@ private:
 
     // Black → White interpolation
     Color densityToGrayscale(float density) const;
+
+    // NEW — fade based on z index
+    Color zFadeColor(const Life&, int z) const;
+
+    // NEW — shimmering blue pulse using density
+    Color bluePulseColor(float density) const;
 
     Color lerp(Color a, Color b, float t) const {
         return { a.r + (b.r - a.r)*t,
