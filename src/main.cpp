@@ -53,7 +53,7 @@ int main() {
 
     // Shaders
     Shader shader;
-    if (!shader.loadFromFile("src/shaders/vertex.glsl", "src/shaders/fragment.glsl")) {
+    if (!shader.loadFromFile("shaders/vertex.glsl", "shaders/fragment.glsl")) {
         std::cerr << "Failed to load shaders\n";
         return 1;
     }

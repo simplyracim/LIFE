@@ -1,4 +1,4 @@
-obj/glad.o: external/glad/src/glad.c external/glad/include/glad/glad.h \
- external/glad/include/KHR/khrplatform.h
-external/glad/include/glad/glad.h:
-external/glad/include/KHR/khrplatform.h:
+obj/glad.o: c:/libs/glad/src/glad.c C:/libs/glad/include/glad/glad.h \
+ C:/libs/glad/include/KHR/khrplatform.h
+C:/libs/glad/include/glad/glad.h:
+C:/libs/glad/include/KHR/khrplatform.h:

@@ -1,5 +1,5 @@
-obj/Cell.o: src/Cell.cpp include/Cell.h external/glad/include/glad/glad.h \
- external/glad/include/KHR/khrplatform.h
+obj/Cell.o: src/Cell.cpp include/Cell.h C:/libs/glad/include/glad/glad.h \
+ C:/libs/glad/include/KHR/khrplatform.h
 include/Cell.h:
-external/glad/include/glad/glad.h:
-external/glad/include/KHR/khrplatform.h:
+C:/libs/glad/include/glad/glad.h:
+C:/libs/glad/include/KHR/khrplatform.h:

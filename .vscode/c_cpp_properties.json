@@ -5,10 +5,11 @@
             "includePath": [
                 "C:/libs/glm/**",
                 "C:/libs/glad/**",
+                "C:/libs/SFML-3.0.2/include",
+
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
-                "${workspaceFolder}/include/**",
-                "C:/SFML-3.0.2/include"
+                "${workspaceFolder}/include/**"
             ],
             "defines": [
                 "_DEBUG",
