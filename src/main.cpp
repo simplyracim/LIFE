@@ -1,3 +1,4 @@
+
 #include "Shader.h"
 #include "Camera.h"
 #include "Life.h"
@@ -10,7 +11,6 @@
 #include "gui/Button.h"
 
 #include <SFML/Graphics.hpp>
-#include <glad/glad.h>
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

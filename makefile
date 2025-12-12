@@ -1,11 +1,15 @@
 # Compiler and flags
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -MMD -MP -DGLAD_GL \
-           -Iinclude -I"C:/libs/glm" -I"C:/libs/glad/include" -Isrc -Isrc/gui \
-           -I"C:/libs/SFML-3.0.2/include"
+           -Iinclude -I"C:/libs/glm" -I"C:/libs/glad/include" -I"C:/libs/GLFW-3.4/include" \
+           -Isrc -Isrc/gui -I"C:/libs/SFML-3.0.2/include"
+
 LDFLAGS = 
 
-# SFML configuration
+# Backend configuration
+GLFW_DIR = C:/libs/GLFW-3.4
+GLFW_LIB = -L"$(GLFW_DIR)/lib-vc2022" -lglfw3
+
 SFML_DIR = C:/libs/SFML-3.0.2
 SFML_LIB = -L"$(SFML_DIR)/lib" -lsfml-graphics -lsfml-window -lsfml-system
 
@@ -49,7 +53,7 @@ $(TARGETDIR)/shaders:
 
 # Main executable target (builds inside output/)
 $(TARGET): $(TARGETDIR) $(OBJDIR) $(OBJDIR)/gui $(OBJECTS) $(GLAD_OBJ)
-	$(CXX) $(OBJECTS) $(GLAD_OBJ) -o $@ $(LDFLAGS) $(SFML_LIB) $(GL_FLAGS)
+	$(CXX) $(OBJECTS) $(GLAD_OBJ) -o $@ $(LDFLAGS) $(SFML_LIB) $(GLFW_LIB) $(GL_FLAGS)
 
 # Compile C++ sources
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
@@ -68,15 +72,24 @@ shaders: $(TARGETDIR)/shaders
 	@echo Copying shaders...
 	@copy "$(SHADERDIR)\*.glsl" "$(TARGETDIR)\shaders\" >nul 2>&1 || echo No shaders found.
 
-# Copy SFML DLLs to output/
+# Copy SFML and GLFW DLLs to output/
 copy-dlls: $(TARGETDIR)
 	@echo Copying SFML DLLs...
 	@if exist "$(SFML_DIR)\bin\*.dll" ( \
 		copy /Y "$(SFML_DIR)\bin\*.dll" "$(TARGETDIR)\" >nul && \
-		echo DLLs copied successfully. \
+		echo SFML DLLs copied successfully. \
 	) else ( \
-		echo No DLLs found to copy. \
+		echo No SFML DLLs found to copy. \
 	)
+
+	@echo Copying GLFW DLLs...
+	@if exist "$(GLFW_DIR)\bin\*.dll" ( \
+		copy /Y "$(GLFW_DIR)\bin\*.dll" "$(TARGETDIR)\" >nul && \
+		echo GLFW DLLs copied successfully. \
+	) else ( \
+		echo No GLFW DLLs found to copy. \
+	)
+
 
 # Build full package (exe + shaders + dlls)
 build: all shaders copy-dlls

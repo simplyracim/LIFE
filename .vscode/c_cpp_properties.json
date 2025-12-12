@@ -6,6 +6,7 @@
                 "C:/libs/glm/**",
                 "C:/libs/glad/**",
                 "C:/libs/SFML-3.0.2/include",
+                "C:/libs/GLFW-3.4/include/",
 
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/**",
