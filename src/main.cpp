@@ -1,4 +1,3 @@
-
 #include "Shader.h"
 #include "Camera.h"
 #include "Life.h"
@@ -75,7 +74,7 @@ int main() {
     // Rendering modules
     Cell cell;
     InstanceBuffer instanceBuffer(sizeX * sizeY * sizeZ);
-    Coloring heatmap(5);
+    Coloring heatmap(5); // radius of heatmap
     Renderer renderer(cell, instanceBuffer, heatmap);
 
     // GUI Panel
