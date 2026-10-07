@@ -1,0 +1,1 @@
+--out-path /home/racim/FMB/LIFE/build/gladsources/glad --api gl:core=3.3 --reproducible c

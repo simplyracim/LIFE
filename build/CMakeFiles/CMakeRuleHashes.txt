@@ -1,0 +1,24 @@
+# Hashes of file build rules.
+de8ccff230dfa7dd4a83a8ec0b38421f _deps/glad-build/CMakeFiles/glad-generate-files
+57a9102aa5cc97566780a62f1277c3db _deps/glad-build/include/glad/glad.h
+f0f717b3567c1bcbdfde09b54032ad45 _deps/glfw-build/CMakeFiles/uninstall
+a69773c089eb0221ccc7aa862dd38d5d _deps/glfw-build/src/CMakeFiles/update_mappings
+b081672c129f4c5d4d4f259208e43b38 _deps/glfw-build/src/fractional-scale-v1-client-protocol-code.h
+1524e564725312384ada4deb4cd5c281 _deps/glfw-build/src/fractional-scale-v1-client-protocol.h
+88ae0ca5e7024898f2c21319859dcaea _deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol-code.h
+b49f3b776a2046ed5362bbbd1e31d0f6 _deps/glfw-build/src/idle-inhibit-unstable-v1-client-protocol.h
+f1530f1854d8682c77e8908497db6ae1 _deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol-code.h
+3ede8d0985e958d23949eac9fcfa5af1 _deps/glfw-build/src/pointer-constraints-unstable-v1-client-protocol.h
+4cb20e2910d2f714b5a365d30f802a6e _deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol-code.h
+0372c83a18618c8c66194d7311b90dcc _deps/glfw-build/src/relative-pointer-unstable-v1-client-protocol.h
+1279f445cf527ae16c51c9970ff3107f _deps/glfw-build/src/viewporter-client-protocol-code.h
+95f21ef2a574a44947301128bb88ce14 _deps/glfw-build/src/viewporter-client-protocol.h
+48731dac6cbc1078f15c9f2a13c4bd91 _deps/glfw-build/src/wayland-client-protocol-code.h
+20dbd7e38adf4680f41aff5115ad5f47 _deps/glfw-build/src/wayland-client-protocol.h
+75fd85361dfeae71c8d576524b40a33b _deps/glfw-build/src/xdg-activation-v1-client-protocol-code.h
+11efc8d1864a0b918fa2bc3d775b8236 _deps/glfw-build/src/xdg-activation-v1-client-protocol.h
+a92730be258584cab2a16b5645e47593 _deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol-code.h
+2403705e1271c93e1791281cc96a55d3 _deps/glfw-build/src/xdg-decoration-unstable-v1-client-protocol.h
+b1044d01553cb8f78d70420b2a658759 _deps/glfw-build/src/xdg-shell-client-protocol-code.h
+e70f2824c336bdbbe305e072c55ecfc7 _deps/glfw-build/src/xdg-shell-client-protocol.h
+21bfd99f836f6fcb950ff22384f5aa2b gladsources/glad/include/KHR/khrplatform.h
