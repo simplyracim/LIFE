@@ -1,0 +1,105 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']          # e.g. v1.0.1
+  workflow_dispatch:       # manual test run (builds, but doesn't publish)
+
+permissions:
+  contents: write          # needed to create the GitHub Release
+
+jobs:
+  build:
+    name: Build (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x64
+            os: windows-latest
+            ext: zip
+          - name: linux-ubuntu
+            os: ubuntu-22.04
+            ext: tar.gz
+          - name: linux-fedora
+            os: ubuntu-latest
+            container: fedora:latest
+            ext: tar.gz
+
+    steps:
+      - name: Install dependencies (Ubuntu)
+        if: matrix.name == 'linux-ubuntu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential git python3 \
+            libx11-dev libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev \
+            libxext-dev libudev-dev libfreetype-dev libgl1-mesa-dev
+
+      - name: Install dependencies (Fedora)
+        if: matrix.name == 'linux-fedora'
+        run: |
+          dnf install -y gcc-c++ cmake make git python3 tar gzip \
+            libX11-devel libXrandr-devel libXcursor-devel libXi-devel \
+            libXinerama-devel libXext-devel systemd-devel freetype-devel \
+            mesa-libGL-devel
+
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: ver
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
+            V="${GITHUB_REF_NAME#v}"
+          else
+            V="dev-${GITHUB_SHA::7}"
+          fi
+          echo "version=$V" >> "$GITHUB_OUTPUT"
+
+      - name: Configure
+        shell: bash
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        shell: bash
+        run: cmake --build build --config Release --parallel
+
+      - name: Stage files
+        shell: bash
+        run: |
+          NAME="3DGameOfLife-${{ steps.ver.outputs.version }}-${{ matrix.name }}"
+          cmake --install build --config Release --component game --prefix "stage/$NAME"
+          echo "NAME=$NAME" >> "$GITHUB_ENV"
+
+      - name: Package
+        shell: bash
+        working-directory: stage
+        run: |
+          if [[ "${{ matrix.ext }}" == "zip" ]]; then
+            cmake -E tar cf "$NAME.zip" --format=zip "$NAME"
+          else
+            tar -czf "$NAME.tar.gz" "$NAME"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: stage/${{ env.NAME }}.${{ matrix.ext }}
+          if-no-files-found: error
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
